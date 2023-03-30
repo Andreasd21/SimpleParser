@@ -14,13 +14,13 @@ namespace ParserJS
             switch (branch.BranchValue.symbol.Value)
             {
                 case "?":
-                    return DefaultLed(First, branch, parser);
+                    return QuestionLed(First, branch, parser);
                 case ".":
-                    return DefaultLed(First, branch, parser);
+                    return DotLed(First, branch, parser);
                 case "[":
-                    return DefaultLed(First, branch, parser);
+                    return BlokBracketLed(First, branch, parser);
                 case "(":
-                    return DefaultLed(First, branch, parser);
+                    return BracketLed(First, branch, parser);
                 default:
                     return DefaultLed( First,  branch,  parser);
             }
@@ -37,6 +37,21 @@ namespace ParserJS
         }
 
         public Branch BracketLed(Branch First, Branch branch, Parser parser)
+        {
+            return DefaultLed(First, branch, parser);
+        }
+
+        public Branch DotLed(Branch First, Branch branch, Parser parser)
+        {
+            return DefaultLed(First, branch, parser);
+        }
+
+        public Branch BlokBracketLed(Branch First, Branch branch, Parser parser)
+        {
+            return DefaultLed(First, branch, parser);
+        }
+
+        public Branch QuestionLed(Branch First, Branch branch, Parser parser)
         {
             return DefaultLed(First, branch, parser);
         }

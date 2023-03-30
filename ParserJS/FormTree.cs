@@ -68,8 +68,6 @@ namespace ParserJS
             {
                 HasChild(b.Second, SecondNode.Location.X, SecondNode.Location.Y + ButtonSize.Height);
             }
-
-
         }
 
         private void HasChild(Branch b, int x, int y)
@@ -99,8 +97,6 @@ namespace ParserJS
                     HasChild(b.First, RightNode.Location.X, RightNode.Location.Y + ButtonSize.Height);
                 }
             }
-            
-
         }
 
         private Button CreateButton()

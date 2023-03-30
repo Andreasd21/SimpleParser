@@ -23,15 +23,13 @@ namespace ParserJS
             {
                 Parser parser = new(tokens);
                 FormTree TForm = new(parser.Tree);
+                MessageBox.Show(parser.Tree.ToString());
                 TForm.Tform.ShowDialog();
             }
             catch (Exception exe)
             {
                 label1.Text = exe.Message;
             }
-
-
-                
         }
 
     }

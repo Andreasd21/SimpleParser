@@ -12,7 +12,7 @@ namespace ParserJS
         {
             return 0;
         }
-        public Branch led(Branch First, Branch branch, Parser parser)
+        public Branch std(Branch First, Branch branch, Parser parser)
         {
             Branch Second = parser.Expression(branch.BranchValue.symbol.lbp);
             if (Second == null)

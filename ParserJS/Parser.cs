@@ -21,6 +21,7 @@ namespace ParserJS
         public Infixr infixr = new();
         public Infix infix = new();
         public Statement statement = new();
+        private bool end = false;
 
 
         public Parser(List<Token> tokens)
@@ -43,14 +44,11 @@ namespace ParserJS
             }
 
             //give symbol double type if neccesary here like '(' '[' '{'
-            symbols.Add(new("(", SymbolType.infix));
-            symbols[symbols.Count - 1].ExtraSybol = SymbolType.prefix;
+            symbols.Add(new("(", SymbolType.infix, 80, SymbolType.prefix));
 
-            symbols.Add(new("[", SymbolType.infix));
-            symbols[symbols.Count - 1].ExtraSybol = SymbolType.prefix;
+            symbols.Add(new("[", SymbolType.infix, 0 , SymbolType.prefix));
 
-            symbols.Add(new("{", SymbolType.prefix));
-            symbols[symbols.Count - 1].ExtraSybol = SymbolType.statement;
+            symbols.Add(new("{", SymbolType.prefix, 0, SymbolType.statement));
 
             Advance();
             Statements();
@@ -76,24 +74,20 @@ namespace ParserJS
             // gives last token the end symbol // niet nodig zonder scope
             if(tokenIndex == tokens.Count)
             {
-                Symbol? end = symbols.Find(x => x.Value == "(end)");
-                if (end == null)
-                {
-                    throw new Exception("end symbol niet gevonden");
-                }
-                tokens.Add(new(TType.Unknown, tokens[tokenIndex - 1].Value, 0));
-                tokens[tokenIndex].AssignSymbol(end);
+                end = true;
             }
-
-            token = tokens[tokenIndex];
             // Check if token value corresponds with expexted value given in parameters. 
-            if(token_value != null) 
+            if (token_value != null)
             {
-                if(token_value != token.Value)
+                if (token_value != token.Value) // scuff
                 {
                     throw new Exception("Expected: " + token_value);
                 }
+                return;
             }
+            token = tokens[tokenIndex];
+            tokenIndex++;
+            
             if (token.Type == TType.Name)
             {
                 Symbol? name = symbols.Find(x => x.Value == "(name)");
@@ -129,8 +123,8 @@ namespace ParserJS
             {
                 throw new Exception("unkown token given ");
             }
-            tokenIndex++;
-        
+            
+
         }
 
         public Branch Expression(int rbp)
@@ -138,7 +132,7 @@ namespace ParserJS
             Token t = token;
             Advance();
             Branch prevBranch = new(t);
-            if(token.symbol.symbolType == SymbolType.prefix || token.symbol.ExtraSybol == SymbolType.prefix)
+            if(t.symbol.symbolType == SymbolType.prefix || t.symbol.ExtraSybol == SymbolType.prefix)
             {
                 nud(new(token), prevBranch);
             }
@@ -153,15 +147,8 @@ namespace ParserJS
 
         public void Statements()
         {
-            while (true)
+            while (!end)
             {
-                if (tokens[tokenIndex].symbol != null)
-                {
-                    if (tokens[tokenIndex].symbol.Value == "(end)")
-                    {
-                        break;
-                    }
-                }
                 Expression(0);
                 Tree.AddBranch(temp);
                 Advance(";");

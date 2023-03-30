@@ -19,7 +19,7 @@ namespace ParserJS.Lexar
         }
 
         public TokenMatch Match(string input, int linePOS) // TODO: Current bug by number*number without space or 19* 8 with operative on first number
-        {
+        {   
             var match = regex.Match(input);
             if (match.Success)
             {

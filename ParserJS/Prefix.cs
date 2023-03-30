@@ -13,11 +13,11 @@ namespace ParserJS
             switch (branch.BranchValue.symbol.Value)
             {
                 case "(":
-                    return nud(First, branch, parser);
+                    return BracketNud(parser);
                 case "[":
-                    return nud(First, branch, parser);
+                    return BlokBracketNud(First, branch, parser);
                 case "{":
-                    return nud(First, branch, parser);
+                    return CurlyBracketNud(First, branch, parser);
                 default:
                     return nud(First, branch, parser);
             }
@@ -31,6 +31,23 @@ namespace ParserJS
             }
             branch.AddBranchValue(First, Second);
             return branch;
+        }
+
+        public Branch BracketNud(Parser parser)
+        {
+            Branch branch = parser.Expression(0);
+            parser.Advance(")");
+            return branch;
+        }
+
+        public Branch BlokBracketNud(Branch First, Branch branch, Parser parser)
+        {
+            return nud(First, branch, parser);
+        }
+
+        public Branch CurlyBracketNud(Branch First, Branch branch, Parser parser)
+        {
+            return nud(First, branch, parser);
         }
     }
 }
