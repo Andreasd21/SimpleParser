@@ -75,6 +75,7 @@ namespace ParserJS
             if(tokenIndex == tokens.Count)
             {
                 end = true;
+                return;
             }
             // Check if token value corresponds with expexted value given in parameters. 
             if (token_value != null)
@@ -83,7 +84,6 @@ namespace ParserJS
                 {
                     throw new Exception("Expected: " + token_value);
                 }
-                return;
             }
             token = tokens[tokenIndex];
             tokenIndex++;
