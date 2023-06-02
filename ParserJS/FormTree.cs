@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Xml.Linq;
 
 namespace ParserJS
 {
@@ -18,6 +19,7 @@ namespace ParserJS
 
         private Size ButtonSize = new(50, 50);
         private Font ButtonFont = new("Arial", 18);
+        private int FurthersX = 0;
         
         public FormTree(Tree t)
         {
@@ -34,21 +36,29 @@ namespace ParserJS
 
             foreach (Branch branch in t.branches)
             {
-                AddBranch(branch);
+                AddBranch(branch, FurthersX);
             }
         }
             
-        private void AddBranch(Branch b)
+        private void AddBranch(Branch b, int x)
         {
             Button Node = CreateButton();
             Button FirstNode = CreateButton();
             Button SecondNode = CreateButton();
 
             Node.Text = b.BranchValue.Value;
-            Node.Left = (Tform.ClientSize.Width - Node.Width) / 2;
+            if (x == 0)
+            {
+                Node.Left = (Tform.ClientSize.Width - Node.Width) / 2;
+            }
+            else
+            {
+                Node.Left = FurthersX + 200;
+            }
             panel.Controls.Add(Node);
+            FurthersX = Node.Left + Node.Width * 2;
 
-            if(b.First == null)
+            if (b.First == null)
             {
                 return;
             }
@@ -69,6 +79,7 @@ namespace ParserJS
             SecondNode.Left = Node.Location.X + ButtonSize.Width * 2;
             SecondNode.Top =  ButtonSize.Height;
             panel.Controls.Add(SecondNode);
+            FurthersX = SecondNode.Left + SecondNode.Width * 2;
             if (b.Second.HasChild())
             {
 
@@ -96,6 +107,8 @@ namespace ParserJS
                 RightNode.Top = y;
 
                 panel.Controls.Add(RightNode);
+
+                FurthersX = RightNode.Left + ButtonSize.Width * 2; 
             }
             if (b.First.HasChild())
             {
