@@ -134,7 +134,7 @@ namespace ParserJS
             Branch prevBranch = new(t);
             if(t.symbol.symbolType == SymbolType.prefix || t.symbol.ExtraSybol == SymbolType.prefix)
             {
-                nud(new(token), prevBranch);
+                prevBranch = nud(new(token), prevBranch);
             }
             while(rbp < token.symbol.lbp)
             {

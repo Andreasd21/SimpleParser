@@ -6,8 +6,13 @@ using System.Threading.Tasks;
 
 namespace ParserJS
 {
+
+    // TO DO:
+    // de rechter kant van de branch heeft een te sterke neiging om naar links te gaan,
+    // de groter de rechter kant is zullen we zien dat die overlapt met de linker kant.
     public class FormTree
     {
+        private bool firstLine = true;
         public Panel panel = new ();
         public Form Tform = new();
 
@@ -48,11 +53,11 @@ namespace ParserJS
                 return;
             }
             FirstNode.Text = b.First.BranchValue.Value;
-            FirstNode.Left = Node.Location.X - ButtonSize.Width;
+            FirstNode.Left = Node.Location.X - ButtonSize.Width * 2;
             FirstNode.Top =  ButtonSize.Height;
             panel.Controls.Add(FirstNode);
             if (b.First.HasChild())
-            {
+            {         
                 HasChild(b.First, FirstNode.Location.X, FirstNode.Location.Y + ButtonSize.Height);
             }
 
@@ -61,12 +66,15 @@ namespace ParserJS
                 return;
             }
             SecondNode.Text = b.Second.BranchValue.Value;
-            SecondNode.Left = Node.Location.X + ButtonSize.Width;
+            SecondNode.Left = Node.Location.X + ButtonSize.Width * 2;
             SecondNode.Top =  ButtonSize.Height;
             panel.Controls.Add(SecondNode);
             if (b.Second.HasChild())
             {
-                HasChild(b.Second, SecondNode.Location.X, SecondNode.Location.Y + ButtonSize.Height);
+
+                 HasChild(b.Second, SecondNode.Location.X, SecondNode.Location.Y + ButtonSize.Height);
+
+                
             }
         }
 
