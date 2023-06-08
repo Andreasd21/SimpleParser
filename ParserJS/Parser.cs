@@ -55,6 +55,14 @@ namespace ParserJS
 
         }
 
+        private void Statements()
+        {
+            while (!end)
+            {
+                Sentence();
+            }
+        }
+
         private SymbolType CheckSymbolType(string type)
         {
             SymbolType symbolType = type switch
@@ -145,14 +153,19 @@ namespace ParserJS
             return prevBranch;
         }
 
-        public void Statements()
+        public void Sentence()
         {
-            while (!end)
+            if (token.Value == "let")
             {
-                Expression(0);
+                Token T = token;
+                Advance();
+                temp = statement.SwitchStatement(new(token),new(T), this);
                 Tree.AddBranch(temp);
-                Advance(";");
+                return;
             }
+            Expression(0);
+            Tree.AddBranch(temp);
+            Advance(";");
         }
 
         public Branch led(Branch First, Branch branch) 

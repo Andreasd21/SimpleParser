@@ -21,7 +21,7 @@ namespace ParserJS.Lexar
             Tokens = new List<Token>();
             Source = source;
 
-            TokenDefs.Add(new(TType.Operative, @"^\+|-|\*|/|=|>|<|>=|<=|&|\||%|!|\^|\(|\)|;$"));
+            TokenDefs.Add(new(TType.Operative, @"^\+|-|>=|\*|/|=|>|<|===|<=|&|\||%|!|\^|\(|\)|;$"));
             TokenDefs.Add(new(TType.Comment, @" \/\/ .* ")); // error als ik iets doe zoals 8 *8
             TokenDefs.Add(new(TType.Function, @"^function$"));
             TokenDefs.Add(new(TType.String, "\".*\"")); // error als string spactie bevat
