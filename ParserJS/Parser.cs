@@ -50,6 +50,8 @@ namespace ParserJS
 
             symbols.Add(new("{", SymbolType.prefix, 0, SymbolType.statement));
 
+            symbols.Add(new("-", SymbolType.infix, 50, SymbolType.prefix));
+
             Advance();
             Statements();
 

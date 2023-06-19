@@ -19,17 +19,12 @@ namespace ParserJS
                 case "{":
                     return CurlyBracketNud(First, branch, parser);
                 default:
-                    return nud(First, branch, parser);
+                    return nud(branch, parser);
             }
         }
-        public Branch nud (Branch First, Branch branch, Parser parser)
+        public Branch nud ( Branch branch, Parser parser)
         {
-            Branch Second = parser.Expression(branch.BranchValue.symbol.lbp);
-            if (Second == null)
-            {
-                throw new Exception("Something went wrong");
-            }
-            branch.AddBranchValue(First, Second);
+            branch.First = parser.Expression(70);
             return branch;
         }
 
@@ -42,12 +37,12 @@ namespace ParserJS
 
         public Branch BlokBracketNud(Branch First, Branch branch, Parser parser)
         {
-            return nud(First, branch, parser);
+            return nud( branch, parser);
         }
 
         public Branch CurlyBracketNud(Branch First, Branch branch, Parser parser)
         {
-            return nud(First, branch, parser);
+            return nud( branch, parser);
         }
     }
 }
